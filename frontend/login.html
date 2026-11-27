@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media CRM - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 10px;
+            font-weight: 600;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-bottom: 15px;
+            display: none;
+        }
+        .loading {
+            display: none;
+        }
+        .register-form {
+            display: none;
+        }
+    </style>
+    <style type="text/tailwindcss">
+        body {
+            @apply min-h-screen bg-slate-50 px-4 py-10 text-slate-900 antialiased;
+            background-image: radial-gradient(ellipse at top, #f1f5f9 0%, #f8fafc 58%, #ffffff 100%);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        .login-container {
+            @apply mx-auto rounded-2xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60;
+            max-width: 440px;
+        }
+
+        .login-header {
+            @apply mb-7 text-left;
+        }
+
+        .login-header h1 {
+            @apply mb-2 flex items-center gap-2 text-2xl font-semibold tracking-tight text-slate-950;
+        }
+
+        .login-header h1 i {
+            @apply flex h-9 w-9 items-center justify-center rounded-lg bg-slate-950 text-base text-white;
+        }
+
+        .login-header p {
+            @apply mb-0 text-sm text-slate-500;
+        }
+
+        .form-label {
+            @apply mb-1.5 block text-sm font-medium text-slate-700;
+        }
+
+        .form-control {
+            @apply mb-0 min-h-11 rounded-lg border-slate-200 px-3.5 py-2.5 text-sm shadow-sm placeholder:text-slate-400 focus:border-slate-400 focus:ring-2 focus:ring-slate-200;
+        }
+
+        .form-control:focus {
+            @apply border-slate-400 ring-2 ring-slate-200;
+            box-shadow: none;
+        }
+
+        .btn-login {
+            @apply mt-2 min-h-11 rounded-lg bg-slate-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-slate-800;
+            background-image: none;
+        }
+
+        .btn-login:hover {
+            @apply bg-slate-800 text-white;
+            background-image: none;
+        }
+
+        .btn-login:disabled {
+            @apply cursor-wait opacity-70;
+        }
+
+        .error-message {
+            @apply mb-4 rounded-lg border border-rose-200 bg-rose-50 px-3.5 py-3 text-sm text-rose-700;
+        }
+
+        hr {
+            @apply my-6 border-slate-200;
+        }
+
+        .text-muted {
+            @apply text-slate-500;
+        }
+
+        a {
+            @apply font-medium text-slate-900 underline-offset-4 hover:underline;
+        }
+
+        @media (max-width: 480px) {
+            .login-container { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1><i class="bi bi-chat-dots"></i> Social Media CRM</h1>
+            <p>Customer Engagement & Reputation Management</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email" 
+                    placeholder="your@email.com"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password" 
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-login">
+                <span class="text-content">Sign In</span>
+                <span class="loading">
+                    <i class="bi bi-hourglass-split"></i> Signing in...
+                </span>
+            </button>
+        </form>
+
+        <hr>
+        <p class="text-center text-muted small mt-4">
+            New to the CRM? <a href="#" id="showRegister">Create an account</a>
+        </p>
+        <form id="registerForm" class="register-form">
+            <h2 class="h5 mb-3">Create your account</h2>
+            <p class="small text-muted">The first account is set up as the administrator.</p>
+            <label for="registerUsername" class="form-label">Username</label>
+            <input id="registerUsername" class="form-control" minlength="3" maxlength="50" pattern="[A-Za-z0-9_\x2d]+" required>
+            <label for="registerFirstName" class="form-label">First name</label>
+            <input id="registerFirstName" class="form-control" maxlength="100">
+            <label for="registerLastName" class="form-label">Last name</label>
+            <input id="registerLastName" class="form-control" maxlength="100">
+            <label for="registerEmail" class="form-label">Email address</label>
+            <input id="registerEmail" type="email" class="form-control" maxlength="255" required>
+            <label for="registerPassword" class="form-label">Password</label>
+            <input id="registerPassword" type="password" class="form-control" minlength="10" maxlength="72" required>
+            <p class="small text-muted">Use 10+ characters with uppercase, lowercase, a number, and a symbol.</p>
+            <button type="submit" class="btn btn-primary btn-login">Create account</button>
+            <p class="text-center small mt-3"><a href="#" id="showLogin">Back to sign in</a></p>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = "http://localhost:8000/api/v1";
+        const errorMessage = document.getElementById("errorMessage");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        function setAuthData(data, user) {
+            localStorage.setItem("authToken", data.access_token || data.token);
+            if (data.refresh_token) localStorage.setItem("refreshToken", data.refresh_token);
+            localStorage.setItem("user", JSON.stringify(user));
+            window.location.href = "/dashboard.html";
+        }
+
+        async function sendAuthRequest(path, body) {
+            const response = await fetch(`${API_URL}${path}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            const data = await response.json();
+            if (!response.ok) {
+                const detail = data.detail || data.message || "Request failed";
+                throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+            }
+            return data;
+        }
+
+        document.getElementById("showRegister").addEventListener("click", event => {
+            event.preventDefault();
+            errorMessage.style.display = "none";
+            loginForm.style.display = "none";
+            registerForm.style.display = "block";
+        });
+        document.getElementById("showLogin").addEventListener("click", event => {
+            event.preventDefault();
+            errorMessage.style.display = "none";
+            registerForm.style.display = "none";
+            loginForm.style.display = "block";
+        });
+
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const submitBtn = e.target.querySelector("button");
+            const textContent = submitBtn.querySelector(".text-content");
+            const loading = submitBtn.querySelector(".loading");
+
+            // Clear previous errors
+            errorMessage.style.display = "none";
+
+            // Show loading state
+            submitBtn.disabled = true;
+            textContent.style.display = "none";
+            loading.style.display = "inline";
+
+            try {
+                const data = await sendAuthRequest("/auth/login", { email, password });
+                setAuthData(data, data.user);
+            } catch (error) {
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = "block";
+            } finally {
+                submitBtn.disabled = false;
+                textContent.style.display = "inline";
+                loading.style.display = "none";
+            }
+        });
+
+        registerForm.addEventListener("submit", async event => {
+            event.preventDefault();
+            errorMessage.style.display = "none";
+            const submit = registerForm.querySelector("button[type='submit']");
+            submit.disabled = true;
+            try {
+                const data = await sendAuthRequest("/auth/register", {
+                    username: document.getElementById("registerUsername").value.trim(),
+                    first_name: document.getElementById("registerFirstName").value.trim() || null,
+                    last_name: document.getElementById("registerLastName").value.trim() || null,
+                    email: document.getElementById("registerEmail").value.trim(),
+                    password: document.getElementById("registerPassword").value
+                });
+                const user = {
+                    id: data.id,
+                    username: data.username,
+                    email: data.email,
+                    role: data.role,
+                    first_name: data.first_name,
+                    last_name: data.last_name
+                };
+                setAuthData(data, user);
+            } catch (error) {
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = "block";
+            } finally {
+                submit.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

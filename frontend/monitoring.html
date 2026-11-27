@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring - Social Media CRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="theme.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+</head>
+<body data-page="monitoring">
+    <div id="sidebar" class="sidebar"></div>
+    <div class="main-content">
+        <div class="top-bar">
+            <h1>Monitoring</h1>
+            <div class="user-menu"><span id="userName"></span>
+                <button class="btn-logout" onclick="logout()" title="Logout" aria-label="Logout"><i class="bi bi-box-arrow-right" aria-hidden="true"></i></button>
+            </div>
+        </div>
+        <main>
+          <div id="monitoring-tab">
+            <div class="interactions-container mb-4">
+                <h2>Captured interaction monitoring</h2>
+                <p class="text-muted">Saved terms match literal text in captured interactions. This does not discover posts outside connected accounts.</p>
+                <form id="termForm" class="d-flex gap-2 mb-3" data-admin-only="true">
+                    <label class="visually-hidden" for="newMonitoringTerm">Keyword, hashtag, or brand</label>
+                    <input id="newMonitoringTerm" class="form-control" maxlength="100" placeholder="Keyword, hashtag, or brand" required>
+                    <button class="btn btn-primary" type="submit">Add term</button>
+                </form>
+                <div class="d-flex gap-2 mb-3">
+                    <label class="visually-hidden" for="monitoringTermSelect">Monitoring term</label>
+                    <select id="monitoringTermSelect" class="form-select"><option value="">No terms configured</option></select>
+                    <button type="button" class="btn btn-outline-danger" data-admin-only="true" onclick="deleteMonitoringTerm()">Delete term</button>
+                </div>
+                <div id="loadingSpinner" class="loading-spinner"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>
+                <div class="table-responsive"><table id="interactionsTable">
+                    <thead><tr><th>Customer</th><th>Platform</th><th>Message</th><th>Type</th><th>Status</th><th>Time</th><th>Action</th></tr></thead>
+                    <tbody id="interactionsBody"></tbody>
+                </table></div>
+                <nav id="interactionPagination" class="d-flex justify-content-between align-items-center mt-3" aria-label="Monitoring pages"></nav>
+            </div>
+            <div class="interactions-container" data-admin-only="true">
+                <h2>Instagram hashtag discovery</h2>
+                <p class="text-muted">Manual search of public recent media; results are not tickets and cannot be replied to through hashtag search. Meta approval and a separate Facebook user token are required. Searches count toward Meta's 30-unique-hashtag limit per account in seven days.</p>
+                <label for="hashtagAccount" class="form-label">Active Instagram account</label>
+                <select id="hashtagAccount" class="form-select mb-3"></select>
+                <form id="hashtagTokenForm" class="mb-3">
+                    <label for="hashtagToken" class="form-label">Facebook user access token for hashtag search</label>
+                    <div class="d-flex gap-2"><input id="hashtagToken" class="form-control" type="password" maxlength="2000" autocomplete="off" required>
+                        <button class="btn btn-outline-primary" type="submit">Save token</button>
+                        <button class="btn btn-outline-danger" type="button" onclick="deleteHashtagToken()">Remove token</button>
+                    </div>
+                </form>
+                <form id="hashtagSearchForm" class="mb-3">
+                    <label for="hashtagSearch" class="form-label">Hashtag</label>
+                    <div class="d-flex gap-2"><input id="hashtagSearch" class="form-control" maxlength="100" placeholder="#brand" required>
+                        <button class="btn btn-primary" type="submit">Search Meta</button>
+                    </div>
+                </form>
+                <div id="hashtagResults" aria-live="polite"></div>
+            </div>
+          </div>
+        </main>
+    </div>
+    <div class="modal fade" id="interactionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg"><div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">Interaction Details</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button><button type="button" class="btn btn-primary" id="createTicketButton" onclick="createTicket()">Create Ticket</button></div>
+        </div></div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="layout.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

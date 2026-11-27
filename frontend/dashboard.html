@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Social Media CRM</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="theme.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+</head>
+<body data-page="dashboard">
+    <div id="sidebar" class="sidebar"></div>
+    <div class="main-content">
+        <div class="top-bar">
+            <h1 id="pageTitle">Dashboard</h1>
+            <div class="user-menu">
+                <span id="userName"></span>
+                <button class="btn-logout" onclick="logout()" title="Logout" aria-label="Logout">
+                    <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+        <main>
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab">
+            <!-- Metrics -->
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon icon-primary"><i class="bi bi-chat-left-text"></i></div>
+                    <div class="metric-label">Today's Interactions</div>
+                    <p class="metric-value" id="todayInteractions">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon icon-warning"><i class="bi bi-exclamation-circle"></i></div>
+                    <div class="metric-label">Unprocessed</div>
+                    <p class="metric-value" id="unprocessedCount">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon icon-danger"><i class="bi bi-ticket-perforated"></i></div>
+                    <div class="metric-label">Open Tickets</div>
+                    <p class="metric-value" id="openTickets">0</p>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon icon-success"><i class="bi bi-clock-history"></i></div>
+                    <div class="metric-label">Avg Response Time</div>
+                    <p class="metric-value" id="avgResponseTime">--</p>
+                </div>
+            </div>
+
+            <!-- Recent Interactions -->
+            <div class="interactions-container">
+                <div class="interactions-header">
+                    <h2>Recent Interactions</h2>
+                    <div class="filter-controls">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search...">
+                        <select class="filter-select" id="platformFilter">
+                            <option value="">All Platforms</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="instagram">Instagram</option>
+                        </select>
+                        <select class="filter-select" id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="unprocessed">Unprocessed</option>
+                            <option value="processed">Processed</option>
+                            <option value="open">Open</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="pending">Pending</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="loading-spinner" id="loadingSpinner">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="interactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Platform</th>
+                                <th>Message</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="interactionsBody">
+                        </tbody>
+                    </table>
+                </div>
+                <nav id="interactionPagination" class="d-flex justify-content-between align-items-center mt-3" aria-label="Interaction pages"></nav>
+            </div>
+        </div>
+        </main>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal fade" id="interactionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Interaction Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <div class="loading-spinner show">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="createTicketButton" onclick="createTicket()">Create Ticket</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="layout.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
